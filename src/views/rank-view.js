@@ -1,13 +1,7 @@
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-  return newElement.firstElementChild;
-};
+import {createElement} from '../util';
 
-const rankView = () => () => {
-  let element = null;
+const rankView = () => {
 
-  // {title, isActive, link,counter} -- параметры для пунктов меню
   const getRankTemplate = () =>{
     return`
     <section class="header__profile profile">
@@ -16,17 +10,7 @@ const rankView = () => () => {
   </section>`;
   };
 
-  const getElement = (item) => {
-    if (!element) {
-      element = createElement(getRankTemplate(item));
-    }
-
-    return element;
-  };
-
-  return {
-    getElement
-  };
+  return createElement(getRankTemplate());
 };
 
-export {rankView, createElement};
+export {rankView};

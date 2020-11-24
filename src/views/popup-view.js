@@ -1,13 +1,7 @@
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-  return newElement.firstElementChild;
-};
+import {createElement} from '../util';
 
-const popupView = () => () => {
-  let element = null;
+const popupView = () => {
 
-  // {title, isActive, link,counter} -- параметры для пунктов меню
   const getPopupTemplate = () =>{
     return`
     <section class="film-details">
@@ -181,17 +175,8 @@ const popupView = () => () => {
 </section>`;
   };
 
-  const getElement = (item) => {
-    if (!element) {
-      element = createElement(getPopupTemplate(item));
-    }
+  return createElement(getPopupTemplate());
 
-    return element;
-  };
-
-  return {
-    getElement
-  };
 };
 
-export {popupView, createElement};
+export {popupView};

@@ -1,13 +1,7 @@
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-  return newElement.firstElementChild;
-};
+import {createElement} from '../util';
 
-const cardView = () => () => {
-  let element = null;
+const cardView = () => {
 
-  // {title, isActive, link,counter} -- параметры для пунктов меню
   const getCardTemplate = () =>{
     return`
     <section class="films">
@@ -195,17 +189,8 @@ const cardView = () => () => {
   </section>`;
   };
 
-  const getElement = (item) => {
-    if (!element) {
-      element = createElement(getCardTemplate(item));
-    }
+  return createElement(getCardTemplate());
 
-    return element;
-  };
-
-  return {
-    getElement
-  };
 };
 
-export {cardView, createElement};
+export {cardView};

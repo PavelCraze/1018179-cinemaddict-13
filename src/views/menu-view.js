@@ -1,13 +1,7 @@
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-  return newElement.firstElementChild;
-};
+import {createElement} from '../util';
 
-const menuView = () => () => {
-  let element = null;
+const menuView = () => {
 
-  // {title, isActive, link,counter} -- параметры для пунктов меню
   const getMenuTemplate = () =>{
     return`
     <nav class="main-navigation">
@@ -27,17 +21,8 @@ const menuView = () => () => {
   </ul>`;
   };
 
-  const getElement = (item) => {
-    if (!element) {
-      element = createElement(getMenuTemplate(item));
-    }
+  return createElement(getMenuTemplate());
 
-    return element;
-  };
-
-  return {
-    getElement
-  };
 };
 
-export {menuView, createElement};
+export {menuView};
