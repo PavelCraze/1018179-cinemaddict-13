@@ -1,7 +1,7 @@
 const render = (element, itemView) => {
   const newFragment = document.createDocumentFragment();
-    const newElement = itemView;
-    newFragment.appendChild(newElement);
+  const newElement = itemView;
+  newFragment.appendChild(newElement);
   element.appendChild(newFragment);
 };
 
