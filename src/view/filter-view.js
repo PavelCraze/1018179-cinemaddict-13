@@ -1,4 +1,6 @@
 import {filterNames, cardfilters} from "../const";
+import {createElement} from "../util.js";
+
 
 const getNameFilter = (array, name) => {
   return array.filter((element) => {
@@ -28,3 +30,27 @@ export const createFilterTemplate = (films) => {
   </nav>`
   );
 };
+
+export default class Filter {
+  constructor(films) {
+    this._films = films;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilterTemplate(this._films);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+
