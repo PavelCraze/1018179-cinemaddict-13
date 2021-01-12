@@ -1,19 +1,14 @@
 import {createElement} from "../util.js";
 
-const createFilmCardsTemplate = () => {
-  return (
-    `<div class="films-list__container"></div>`
-  );
-};
-
-
 export default class FilmCards {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createFilmCardsTemplate();
+    return (
+      `<div class="films-list__container"></div>`
+    );
   }
 
   getElement() {

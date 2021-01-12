@@ -7,7 +7,7 @@ import LoadMoreButton from "./view/load-more-button";
 import FilmDetails from "./view/popup-view";
 import FilmCards from "./view/film-cards";
 import {generateFilmCards} from "./mock/film-data";
-import {render, RenderPosition} from "./util";
+import {render, RenderPosition, onEscKeyDown} from "./util";
 
 
 const NUMBER_OF_FILMS = 20;
@@ -15,41 +15,31 @@ const TOTAL_NUMBER_OF_CARDS = 5;
 const NUMBER_OF_CARDS = 2;
 
 const renderFilmCard = (filmListElement, film) => {
+  const filmCard = new FilmCard(film);
+  const filmDetails = new FilmDetails(film);
   const replaceFilmCardToDetails = () => {
     filmListElement.replaceChild(filmDetails.getElement(), filmCard.getElement());
+    document.body.style.overflow = `hidden`;
   };
 
   const replaceDetailsToFilmCard = () => {
     filmListElement.replaceChild(filmCard.getElement(), filmDetails.getElement());
+    document.body.style.overflow = `auto`;
   };
-
-  const onEscKeyDown = (evt) => {
-    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-
-    if (isEscKey) {
-      replaceDetailsToFilmCard();
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    }
-  };
-
-  const filmCard = new FilmCard(film);
-  const filmDetails = new FilmDetails(film);
 
   render(filmListElement, filmCard.getElement(), RenderPosition.BEFOREEND);
 
   filmCard._element.addEventListener(`click`, (evt) => {
     evt.preventDefault();
     replaceFilmCardToDetails();
-    document.addEventListener(`keydown`, onEscKeyDown);
-    document.body.style.overflow = `hidden`;
   });
+
+  document.addEventListener(`keydown`, onEscKeyDown.bind(null, replaceDetailsToFilmCard));
 
   const detailsClose = filmDetails.getElement().querySelector(`.film-details__close-btn`);
   detailsClose.addEventListener(`click`, (evt) => {
     evt.preventDefault();
     replaceDetailsToFilmCard();
-    document.removeEventListener(`keydown`, onEscKeyDown);
-    document.body.style.overflow = `auto`;
   });
 };
 

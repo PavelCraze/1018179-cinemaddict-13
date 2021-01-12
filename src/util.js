@@ -21,3 +21,11 @@ export const render = (container, element, place) => {
       break;
   }
 };
+
+export const onEscKeyDown = (action, evt) => {
+  const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+  if (isEscKey) {
+    action();
+  }
+};

@@ -1,10 +1,5 @@
 import {createElement} from "../util.js";
 
-export const createLoadMoreButtonTemplate = () => {
-  return (
-    `<button class="films-list__show-more">Show more</button>`
-  );
-};
 
 export default class LoadMoreButton {
   constructor() {
@@ -12,7 +7,9 @@ export default class LoadMoreButton {
   }
 
   getTemplate() {
-    return createLoadMoreButtonTemplate();
+    return (
+      `<button class="films-list__show-more">Show more</button>`
+    );
   }
 
   getElement() {
