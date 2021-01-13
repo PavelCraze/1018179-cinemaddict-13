@@ -1,14 +1,13 @@
 import {createElement} from "../util.js";
 
-
-export default class LoadMoreButton {
+export default class FilmCards {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
     return (
-      `<button class="films-list__show-more">Show more</button>`
+      `<div class="films-list__container"></div>`
     );
   }
 
