@@ -24,7 +24,7 @@ export default class FilmDetails {
     return (
       `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
-      <div class="form-details__top-container">
+      <div class="film-details__top-container">
         <div class="film-details__close">
           <button class="film-details__close-btn" type="button">close</button>
         </div>
@@ -104,7 +104,7 @@ export default class FilmDetails {
         </section>
       </div>
 
-      <div class="form-details__bottom-container">
+      <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
       <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this._comments.length}</span></h3>
 

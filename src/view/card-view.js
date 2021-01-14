@@ -1,7 +1,9 @@
-import {createElement} from "../util.js";
 
-export default class FilmCard {
+import AbstractComponent from "./abstract-view.js";
+
+export default class FilmCard extends AbstractComponent {
   constructor({movieTitle, rating, date, duration, genreNames, poster, description, comments}) {
+    super();
     this._element = null;
     this._movieTitle = movieTitle;
     this._rating = rating;
@@ -34,17 +36,5 @@ export default class FilmCard {
             </form>
           </article>`
     );
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
