@@ -12,4 +12,9 @@ export default class LoadMoreButton extends AbstractComponent {
       `<button class="films-list__show-more">Show more</button>`
     );
   }
+
+  setClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement().addEventListener(`click`, this._clickHandler);
+  }
 }

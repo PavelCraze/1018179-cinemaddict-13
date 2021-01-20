@@ -24,7 +24,7 @@ const getNewArray = (ar) => {
   const array = [];
   const newLength = ar.length - 4;
   const j = getRandomInRange(0, newLength);
-  for (let i = j; i <= j + getRandomInRange(0, 5); i++) {
+  for (let i = j; i <= j + getRandomInRange(0, 4); i++) {
     array.push(ar[i]);
   }
   return array;
@@ -65,6 +65,10 @@ const finalDate = new Date(2020, 3, 1).getTime();
 const durations = [`1h 40m`, `2h 25m`, `2h 45m`];
 const booleanValues = [`true`, `false`];
 
+const id = () =>{
+
+  return getRandomInRange(0, 1e6).toString();
+};
 const generateFilmCard = () => {
   return {
     movieTitle: movieTitles[getRandomInRange(0, movieTitles.length - 1)],
@@ -83,6 +87,7 @@ const generateFilmCard = () => {
     isHistory: booleanValues[getRandomInRange(0, booleanValues.length - 1)],
     isWatchlist: booleanValues[getRandomInRange(0, booleanValues.length - 1)],
     duration: durations[getRandomInRange(0, durations.length - 1)],
+    id: id()
   };
 };
 

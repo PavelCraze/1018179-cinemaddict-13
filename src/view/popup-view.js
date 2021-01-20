@@ -1,8 +1,10 @@
-import {createElement} from "../util.js";
+import AbstractComponent from "./abstract-view.js";
 import {emojiNames} from "../const";
 
-export default class FilmDetails {
+export default class FilmDetails extends AbstractComponent {
+
   constructor({poster, movieTitle, age, director, writers, actors, rating, date, duration, country, genreNames, description, comments}) {
+    super();
     this._poster = poster;
     this._movieTitle = movieTitle;
     this._age = age;
@@ -17,7 +19,7 @@ export default class FilmDetails {
     this._description = description;
     this._comments = comments;
 
-    this._element = null;
+    this._setCloseHandler = this.setCloseHandler.bind(this);
   }
 
   getTemplate() {
@@ -156,16 +158,15 @@ export default class FilmDetails {
     </section>`
     );
   }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  setCloseHandler(callback) {
+    this.callback.click = callback;
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._setCloseHandler);
+    document.addEventListener(`keydown`, this._setCloseHandler);
   }
 
-  removeElement() {
-    this._element = null;
+  setCloseHandler(evt) {
+    evt.preventDefault();
+    this.callback.click();
   }
 }
+
