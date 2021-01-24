@@ -1,4 +1,4 @@
-import FilmCard from "../view/film-cards";
+import FilmCard from "../view/card-view";
 import FilmDetails from "../view/popup-view";
 import {render, RenderPosition, onEscKeyDown, replace, remove} from "../util";
 
@@ -8,9 +8,17 @@ const Mode = {
 };
 
 export default class FilmPresenter {
-  constructor(filmListElement) {
+  constructor(filmListElement, changeData, changeMode) {
 
     this._filmsListElement = filmListElement;
+    this._changeData = changeData;
+    this._changeMode = changeMode;
+
+    this._filmCard = null;
+    this._filmDetails = null;
+
+    this._cardHadleClick = this._cardHadleClick.bind(this);
+    this._closePopupClick = this._closeButtonHandleClick.bind(this);
   }
 
   init(film) {
@@ -20,22 +28,24 @@ export default class FilmPresenter {
     const prevFilmDetails = this._filmDetails;
 
     this._filmCard = new FilmCard(film);
-    this._filmDetail = new FilmDetails(film);
+    this._filmDetails = new FilmDetails(film);
+
+    this._filmCard.setClickHandler(this._cardHadleClick());
+    this._filmDetails.setCloseHandler(this._closeButtonHandleClick());
 
     if (prevFilmCard === null || prevFilmDetails === null) {
-      render(this._taskListContainer, this._taskComponent, RenderPosition.BEFOREEND);
+      render(this._filmsListElement, this._filmCard, RenderPosition.BEFOREEND);
       return;
     }
 
     if (this._mode === Mode.DEFAULT) {
-      replace(this._taskComponent, prevFilmCard);
+      replace(this._filmCard, prevFilmCard);
     }
 
     if (this._mode === Mode.EDITING) {
-      replace(this._taskComponent, prevFilmDetails);
+      replace(this._filmCard, prevFilmDetails);
       this._mode = Mode.DEFAULT;
     }
-
     remove(prevFilmCard);
     remove(prevFilmDetails);
   }
@@ -51,31 +61,24 @@ export default class FilmPresenter {
     }
   }
 
+  replaceFilmCardToDetails() {
+    replace(this._filmDetails, this._filmCard);
+    document.body.style.overflow = `hidden`;
+    // this._changeMode();
+    this._mode = Mode.EDITING;
+  }
 
-  init(film) {
-    const filmCard = new FilmCard(film);
-    const filmDetails = new FilmDetails(film);
-    const replaceFilmCardToDetails = () => {
-      this.replaceChild(filmDetails.getElement(), filmCard.getElement());
-      document.body.style.overflow = `hidden`;
-    };
+  replaceDetailsToFilmCard() {
+    replace(this._filmCard, this._filmDetails);
+    document.body.style.overflow = `auto`;
+    this._mode = Mode.DEFAULT;
+  }
 
-    const replaceDetailsToFilmCard = () => {
-      this._filmsListElemnt.replaceChild(filmCard.getElement(), filmDetails.getElement());
-      document.body.style.overflow = `auto`;
-    };
+  _cardHadleClick() {
+    this.replaceFilmCardToDetails();
+  }
 
-    render(this._filmListElement, filmCard.getElement(), RenderPosition.BEFOREEND);
-
-    filmCard.setOnClickHandler(() => {
-      replaceFilmCardToDetails();
-    });
-
-    filmDetails.setCloseHandler(onEscKeyDown.bind(null, replaceDetailsToFilmCard));
-
-    const detailsClose = filmDetails.getElement().querySelector(`.film-details__close-btn`);
-    detailsClose.setOnClickHandler(() => {
-      replaceDetailsToFilmCard();
-    });
+  _closeButtonHandleClick() {
+    this.replaceDetailsToFilmCard();
   }
 }

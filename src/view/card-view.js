@@ -37,4 +37,8 @@ export default class FilmCard extends AbstractComponent {
           </article>`
     );
   }
+  setClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._clickHandler);
+  }
 }

@@ -18,8 +18,6 @@ export default class FilmDetails extends AbstractComponent {
     this._genreNames = genreNames;
     this._description = description;
     this._comments = comments;
-
-    this._setCloseHandler = this.setCloseHandler.bind(this);
   }
 
   getTemplate() {
@@ -159,14 +157,14 @@ export default class FilmDetails extends AbstractComponent {
     );
   }
   setCloseHandler(callback) {
-    this.callback.click = callback;
+    this._callback.click = callback;
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._setCloseHandler);
     document.addEventListener(`keydown`, this._setCloseHandler);
   }
 
-  setCloseHandler(evt) {
+  _setCloseHandler(evt) {
     evt.preventDefault();
-    this.callback.click();
+    this._callback.click();
   }
 }
 
