@@ -1,5 +1,9 @@
-const emojiNames = [`smile`, `sleeping`, `puke`, `angry`];
-const filterNames = [`watchlist`, `history`, `favorites`];
-const cardfilters = [`isWatchlist`, `isHistory`, `isFavorite`];
+export const emojiNames = [`smile`, `sleeping`, `puke`, `angry`];
+export const filterNames = [`watchlist`, `history`, `favorites`];
+export const cardfilters = [`isWatchlist`, `isHistory`, `isFavorite`];
 
-export {emojiNames, filterNames, cardfilters};
+export const SortType = {
+  DEFAULT: `default`,
+  DATE: `date`,
+  RATING: `rating`
+};

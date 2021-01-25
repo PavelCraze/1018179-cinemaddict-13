@@ -17,8 +17,6 @@ export default class FilmPresenter {
     this._filmCard = null;
     this._filmDetails = null;
 
-    this._cardHadleClick = this._cardHadleClick.bind(this);
-    this._closePopupClick = this._closeButtonHandleClick.bind(this);
   }
 
   init(film) {
@@ -30,8 +28,12 @@ export default class FilmPresenter {
     this._filmCard = new FilmCard(film);
     this._filmDetails = new FilmDetails(film);
 
-    this._filmCard.setClickHandler(this._cardHadleClick());
-    this._filmDetails.setCloseHandler(this._closeButtonHandleClick());
+    this._filmCard.setClickHandler(this.replaceFilmCardToDetails.bind(this));
+    this._filmDetails.setCloseButtonClickHandler(this.replaceDetailsToFilmCard.bind(this));
+    this._favoriteButtonClickHandler = this._handleFavoriteClick.bind(this);
+    this._watchedButtonClickHandler = this._handleWatchedClick.bind(this);
+    this._watchlistButtonClickHandler = this._handleWatchlistClick.bind(this);
+
 
     if (prevFilmCard === null || prevFilmDetails === null) {
       render(this._filmsListElement, this._filmCard, RenderPosition.BEFOREEND);
@@ -66,6 +68,9 @@ export default class FilmPresenter {
     document.body.style.overflow = `hidden`;
     // this._changeMode();
     this._mode = Mode.EDITING;
+    this._handleWatchlistClick = this._handleWatchlistClick(this);
+    this._handleWatchedClick = this._handleWatchedClick(this);
+    this._handleFavoriteClick = this._handleFavoriteClick(this);
   }
 
   replaceDetailsToFilmCard() {
@@ -74,11 +79,40 @@ export default class FilmPresenter {
     this._mode = Mode.DEFAULT;
   }
 
-  _cardHadleClick() {
-    this.replaceFilmCardToDetails();
+  _handleFavoriteClick() {
+    this._changeData(
+        Object.assign(
+            {},
+            this._film,
+            {
+              isFavorite: !this._film.isFavorite
+            }
+        )
+    );
   }
 
-  _closeButtonHandleClick() {
-    this.replaceDetailsToFilmCard();
+  _handleWatchedClick() {
+    this._changeData(
+        Object.assign(
+            {},
+            this._film,
+            {
+              isFavorite: !this._film.isWatched
+            }
+        )
+    );
   }
+
+  _handleWatchlistClick() {
+    this._changeData(
+        Object.assign(
+            {},
+            this._film,
+            {
+              isFavorite: !this._film.isWatchlist
+            }
+        )
+    );
+  }
+
 }

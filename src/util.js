@@ -70,6 +70,28 @@ export const replace = (newChild, oldChild) => {
   parent.replaceChild(newChild, oldChild);
 };
 
+// export const sortFilmDate = (filmA, filmB) => {
+//   const weight = () =>{
+//     if()
+//   }
+
+//   if (weight !== null) {
+//     return weight;
+//   }
+
+//   return
+// };
+
+// export const sortFilmRating = (filmA, filmB) => {
+//   const weight = getWeightForNullDate(taskA.dueDate, taskB.dueDate);
+
+//   if (weight !== null) {
+//     return weight;
+//   }
+
+//   return
+// };
+
 export const remove = (component) => {
   if (component === null) {
     return;
@@ -78,7 +100,6 @@ export const remove = (component) => {
   if (!(component instanceof AbstractComponent)) {
     throw new Error(`Can remove only components`);
   }
-
   component.getElement().remove();
   component.removeElement();
 };

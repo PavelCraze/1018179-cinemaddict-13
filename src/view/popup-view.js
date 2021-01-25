@@ -3,8 +3,9 @@ import {emojiNames} from "../const";
 
 export default class FilmDetails extends AbstractComponent {
 
-  constructor({poster, movieTitle, age, director, writers, actors, rating, date, duration, country, genreNames, description, comments}) {
+  constructor({film, poster, movieTitle, age, director, writers, actors, rating, date, duration, country, genreNames, description, comments, id}) {
     super();
+    this._film = film;
     this._poster = poster;
     this._movieTitle = movieTitle;
     this._age = age;
@@ -18,6 +19,14 @@ export default class FilmDetails extends AbstractComponent {
     this._genreNames = genreNames;
     this._description = description;
     this._comments = comments;
+    this._id = id;
+    this._callback = {};
+
+    this._closeButtonClickHandler = this._closeButtonClickHandler.bind(this);
+    this._favoriteCheckboxClickHandler = this._closeButtonClickHandler.bind(this);
+    this._watchedCheckboxClickHandler = this._closeButtonClickHandler.bind(this);
+    this._watchlistCheckboxClickHandler = this._closeButtonClickHandler.bind(this);
+
   }
 
   getTemplate() {
@@ -156,15 +165,55 @@ export default class FilmDetails extends AbstractComponent {
     </section>`
     );
   }
-  setCloseHandler(callback) {
-    this._callback.click = callback;
-    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._setCloseHandler);
-    document.addEventListener(`keydown`, this._setCloseHandler);
-  }
 
-  _setCloseHandler(evt) {
+  _closeButtonClickHandler(evt) {
     evt.preventDefault();
     this._callback.click();
+  }
+
+  setCloseButtonClickHandler(callback) {
+    this._callback.click = callback;
+
+    this.getElement()
+      .querySelector(`.film-details__close-btn`)
+      .addEventListener(`click`, this._closeButtonClickHandler);
+  }
+
+
+  _favoriteCheckboxClickHandler() {
+    this._handler.clickFavorite(this._data.id);
+  }
+
+  _watchedCheckboxClickHandler() {
+    this._callback.clickWatched(this._data.id);
+  }
+
+  _watchlistCheckboxClickHandler() {
+    this._callback.clickWatchlist(this._data.id);
+  }
+
+  setFavoriteCheckboxClickHandler(callback) {
+    this._callback.clickFavorite = callback;
+
+    this.getElement()
+      .querySelector(`#favorite`)
+      .addEventListener(`click`, this._favoriteCheckboxClickHandler);
+  }
+
+  setWatchedCheckboxClickHandler(handler) {
+    this._handler.clickWatched = handler;
+
+    this.getElement()
+      .querySelector(`#watched`)
+      .addEventListener(`click`, this._watchedCheckboxClickHandler);
+  }
+
+  setWatchlistCheckboxClickHandler(handler) {
+    this._handler.clickWatchlist = handler;
+
+    this.getElement()
+      .querySelector(`#watchlist`)
+      .addEventListener(`click`, this._watchlistCheckboxClickHandler);
   }
 }
 

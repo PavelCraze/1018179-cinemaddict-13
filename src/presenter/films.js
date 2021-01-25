@@ -5,6 +5,7 @@ import {remove, render, RenderPosition} from "../util";
 import FilmsMarkup from "../view/films-view";
 import SiteProfile from "../view/profile-view";
 import FilmCardsContainer from "../view/film-cards";
+import {SortType} from "../const.js";
 
 const TOTAL_NUMBER_OF_CARDS = 5;
 
@@ -13,12 +14,14 @@ export default class FilmsPresenter {
     this._filmsContainer = filmsContainer;
     this._renderedCardsCount = TOTAL_NUMBER_OF_CARDS;
     this._filmPresenter = {};
+    this._currentSortType = SortType.DEFAULT;
 
     this._filmsComponent = new FilmsMarkup();
     this._filmCardsContainer = new FilmCardsContainer();
     this._sortComponent = new Sorting();
     this._loadMoreButtonComponent = new LoadMoreButton();
     this._profileComponent = new SiteProfile();
+    this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
   }
 
   init(filmCards) {
@@ -52,8 +55,14 @@ export default class FilmsPresenter {
     }
   }
 
+  _handleModeChange() {
+    Object
+      .values(this._filmPresenter)
+      .forEach((presenter) => presenter.resetView());
+  }
+
   renderFilmCard(film) {
-    const filmElement = new FilmPresenter(this._filmCardsContainer);
+    const filmElement = new FilmPresenter(this._filmCardsContainer, this._handleModeChange);
     filmElement.init(film);
     this._filmPresenter[film.id] = filmElement;
   }
